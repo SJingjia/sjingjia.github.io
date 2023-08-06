@@ -1,0 +1,638 @@
+<html>
+  <head>
+    <title>PlaneRecTR: Unified Query Learning for 3D Plane Recovery from a Single View</title>
+    <meta property="og:title" content="PlaneRecTR: Unified Query Learning for 3D Plane Recovery from a Single View"/>
+    <meta property="og:image" content="teaser.png"/>
+    <meta property="og:description" content="Jingjia Shi, Shuaifeng Zhi, Kai Xu" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- webpage template-->
+    <link rel="stylesheet" href="website.css">
+    <!-- model-viewer css -->
+    <link rel="stylesheet" href="demo-styles.css">
+  </head>
+  <body>
+    <br>
+    <center>
+      <span style="font-size:48px">PlaneRecTR</span><br><br>
+      <span style="font-size:38px">Unified Query Learning for 3D Plane Recovery from a Single View</span>
+    </center>
+    <br><br>
+    <table align=center width=100%>
+      <tr>
+        <td align=center width=33%>
+          <center>
+            <span style="font-size:20px">Jingjia Shi</span>
+          </center>
+        </td>
+        <td align=center width=33%>
+          <center>
+            <span style="font-size:20px"><a href="https://shuaifengzhi.com/">Shuaifeng Zhi</a></span>
+          </center>
+        </td>
+        <td align=center width=33%>
+          <center>
+            <span style="font-size:20px"><a href="https://kevinkaixu.net/index.html">Kai Xu</a></span>
+          </center>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <table align=center width=100%>
+      <tr>
+        <td align=center>
+          <center>
+            <span style="font-size:20px">National University of Defense technology</span> <br><br>
+            <span style="font-size:20px">ICCV 2023 </span> <br><br>
+          </center>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <table align=center width=100%>
+      <tr>
+        <td align=center width=33%>
+          <center>
+            <span style="font-size:20px"><a href="https://arxiv.org/abs/2307.13756">[paper]</a></span>
+          </center>
+        </td>
+        <td align=center width=33%>
+          <center>
+            <span style="font-size:20px"><a href="https://github.com/SJingjia/PlaneRecTR">[code]</a></span>
+          </center>
+        </td>
+        <td align=center width=33%>
+          <center>
+            <span style="font-size:20px">[video<a href="https://youtu.be/YBB7totHGJg"> Y</a> / <a href="https://www.bilibili.com/video/BV1kx4y1d76w">B</a>]</span>
+          </center>
+        </td>
+      </tr>
+    </table>
+    <table align=center width=100%>
+
+    </table>
+    <br>
+    <table align=center width=60%>
+      <tr>
+        <td>
+          <center>
+            <img src = "teaser.png" width="100%"></img><br>
+          </center>
+        </td>
+      </tr>
+      <td width=600px>
+        <center>
+          <span style="font-size:18px"><i>Our core idea is to use
+            unified query learning to jointly model all subtasks of single-view
+            plane recovery and output plane-level predictions, which achieves
+            mutual benefits among tasks and enables higher performance. </i>
+        </center>
+      </td>
+      </tr>
+    </table>
+	<br>
+	<div>
+		<center>
+		<p class="abstract">
+			<!-- PlaneRecTR is a vision transformer architecture with query-based learning, 
+      and for the first time unifies all subtasks of single-view plane recovery with a single compact model. 
+      Mutual benefits between planar geometry and segmentation can be obtained by PlaneRecTR, 
+      achieving SOTA performance on ScanNet and NYUv2-Plane datasets. -->
+      3D plane recovery from a single image can usually be divided into several subtasks of plane detection, segmentation, parameter estimation and possibly depth estimation.
+   Previous works tend to solve this task by either extending the RCNN-based segmentation network or the dense pixel embedding-based clustering framework. 
+   However, none of them tried to integrate above related subtasks into a unified framework but treat them separately and sequentially, 
+   which we suspect is potentially a main source of performance limitation for existing approaches.
+   Motivated by this finding and the success of query-based learning in enriching reasoning among semantic entities, 
+   in this paper, we propose PlaneRecTR, a Transformer-based architecture, 
+   which for the first time unifies all subtasks related to single-view plane recovery with a single compact model.
+    Extensive quantitative and qualitative experiments demonstrate that our proposed unified learning achieves mutual benefits across subtasks, 
+    obtaining a new state-of-the-art performance on public ScanNet and NYUv2-Plane datasets.
+		</p>
+		</center>
+  </div>
+  <br><br>
+  <hr>
+  <center>
+    <h1>Video</h1>
+  </center>
+  <div>
+    <p align="center">
+      <!-- <iframe style="width: 50%; height:50%; min-width:300px" src="//player.bilibili.com/player.html?bvid=BV1kx4y1d76w&cid=1208213595&page=1&high_quality=1&danmaku=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+      <!-- <iframe style="width: 50%; height:50%; min-width:300px" src="//player.bilibili.com/player.html?bvid=BV1kx4y1d76w&cid=1208213595&page=1&high_quality=1&danmaku=0" allowfullscreen="allowfullscreen" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"></iframe> -->
+      <!-- <iframe style="width: 50%; height:50%; min-width:300px" src="http://player.bilibili.com/player.html?aid=998767911&bvid=BV1kx4y1d76w&cid=1208213595&page=1" allowfullscreen="allowfullscreen" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"> </iframe> -->
+      <!-- <iframe src="//player.bilibili.com/player.html?aid=998767911&bvid=BV1kx4y1d76w&cid=1208213595&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe> -->
+      <iframe style="width: 60%; height:56%; min-width:300px" src="https://www.youtube.com/embed/YBB7totHGJg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </p>
+  </div>
+  <table align=center width=100%>
+    <tr>
+      <td align=center width=60%>
+        <center>
+          <span style="font-size:20px"><a href="https://www.bilibili.com/video/BV1kx4y1d76w">[bilibili video]</a></span>
+        </center>
+      </td>
+    </tr>
+  </table>
+
+  <table align=center width=100%>
+    <center>
+      <h1>Interactive Results</h1>
+    </center>
+    <tr>
+      <center>
+        <div class='container'>
+          <div class ='rowi' >
+            <div class ='column'>
+              <div class='header header-input'>Input</div>
+            </div>
+            <div class ='column'>
+              <div class='header header-result'>Ours Seg</div>
+            </div>
+            <div class ='column'>
+              <div class='header header-result'>GT Seg</div>
+            </div>
+            <div class ='column'>
+              <div class='header header-result'>Ours Models</div>
+            </div>
+            <div class ='column'>
+              <div class='header header-result'>GT Models</div>
+            </div>
+          </div>
+          
+          <div class ='row' >
+            <div class ='column'>
+              <a href='examples/359_d2_image.png'><img class='input-img' src='examples/359_d2_image.png'></img></a>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/359_seg_predplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                doubleSided="True"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/359_seg_GTplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/359_d2_depth_predplane_pred_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/359_d2_depth_GTplane_gt_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+          </div>
+          
+          
+
+          <div class ='row' >
+            <div class ='column'>
+              <a href='examples/250_d2_image.png'><img class='input-img' src='examples/250_d2_image.png'></img></a>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/250_seg_predplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 72%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/250_seg_GTplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/250_d2_depth_predplane_pred_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 72%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/250_d2_depth_GTplane_gt_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+          </div>
+          
+
+          <div class ='row' >
+            <div class ='column'>
+              <a href='examples/360_d2_image.png'><img class='input-img' src='examples/360_d2_image.png'></img></a>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/360_seg_predplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 50%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/360_seg_GTplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 70%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/360_d2_depth_predplane_pred_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 50%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/360_d2_depth_GTplane_gt_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 70%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+          </div>
+
+          <div class ='row' >
+            <div class ='column'>
+              <a href='examples/136_d2_image.png'><img class='input-img' src='examples/136_d2_image.png'></img></a>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/136_seg_predplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 67%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/136_seg_GTplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/136_d2_depth_predplane_pred_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 67%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/136_d2_depth_GTplane_gt_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class ='row' >
+            <div class ='column'>
+              <a href='examples/516_d2_image.png'><img class='input-img' src='examples/516_d2_image.png'></img></a>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/516_seg_predplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 82%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/516_seg_GTplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/516_d2_depth_predplane_pred_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 82%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/516_d2_depth_GTplane_gt_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+          </div>
+          <div class ='row' >
+            <div class ='column'>
+              <a href='examples/532_d2_image.png'><img class='input-img' src='examples/532_d2_image.png'></img></a>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/532_seg_predplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/532_seg_GTplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/532_d2_depth_predplane_pred_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/532_d2_depth_GTplane_gt_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+          </div>
+
+          <div class ='row' >
+            <div class ='column'>
+              <a href='examples/326_d2_image.png'><img class='input-img' src='examples/326_d2_image.png'></img></a>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/326_seg_predplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/326_seg_GTplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/326_d2_depth_predplane_pred_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/326_d2_depth_GTplane_gt_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+          </div>
+          
+          <div class ='row' >
+            <div class ='column'>
+              <a href='examples/576_d2_image.png'><img class='input-img' src='examples/576_d2_image.png'></img></a>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/576_seg_predplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/576_seg_GTplane.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/576_d2_depth_predplane_pred_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+            <div class ='column'>
+              <div id="card">
+                <model-viewer src="examples/576_d2_depth_GTplane_gt_model.glb"
+                shadow-intensity="1"
+                camera-controls
+                camera-orbit="0deg 75deg 60%"
+                exposure="0.7"
+                background-color: rgb(197, 4, 4);
+                >
+                </model-viewer>
+              </div>
+            </div>
+          </div>
+          
+
+        </div>
+      </center>
+    </tr>
+    <br>
+    <!-- <hr> -->
+  </table>
+
+  <!-- <table align=center width=100%>
+    <tr>
+      <td> -->
+        <!-- <left> -->
+          <center>
+            <h1>Bibtex</h1>
+          </center>
+          <center>
+            <span style="text-align: left; font-size:18px; display: inline-block;">
+              <pre>
+@misc{shi2023planerectr,
+  title={PlaneRecTR: Unified Query learning for 3D Plane Recovery from a Single View}, 
+  author={Jingjia Shi and Shuaifeng Zhi and Kai Xu},
+  year={2023},
+  eprint={2307.13756},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV}
+}
+              </pre>
+            <!-- </span> -->
+          </center>
+        <!-- </left> -->
+      <!-- </td>
+    </tr>
+  </table> -->
+
+
+    <table align=center width=100%>
+      <tr>
+        <td>
+          <hr>
+          <left>
+            <center>
+              <h1>Acknowledgements</h1>
+        We thank the anonymous reviewers and AC of ICCV23 for their valuable comments, and authors of PlaneTR for the helpful comments on evaluations. 
+        <br><br>
+        This work was supported in part by the National Key Research and Development Program of China (2018AAA0102200), NSFC (62325211, 62132021, 62201603) and Research Program of National University of Defense Technology (Grant No. ZK22-04).
+              <br><br>
+			  This webpage was adapted from <a href="https://jinlinyi.github.io/SparsePlanes/">Sparse Planes</a>. The interactive examples are powered by <a href="https://modelviewer.dev/">model-viewer</a>.
+            </center>
+          </left>
+        </td>
+      </tr>
+    </table>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  </body>
+</html>
